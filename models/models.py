@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 
-class AllowWrightOnStock():
+class AllowWeightOnStock():
     _inherit = 'stock.picking'
     
     some_variable = fields.Char('Hola soy un field')
