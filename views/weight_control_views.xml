@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="view_weight_control_form" model="ir.ui.view">
+            <field name="name">stock.picking.weight_control.form</field>
+            <field name="model">stock.picking.weight_control</field>
+            <field name="arch" type="xml">
+                <form string="Weight Control">
+                    <group>
+                        <field name="state"/>
+                        <field name="datetime"/>
+                        <field name="weight"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="action_weight_control" model="ir.actions.act_window">
+            <field name="name">Weight Control</field>
+            <field name="res_model">stock.picking.weight_control</field>
+            <field name="view_mode">form</field>
+        </record>
+    </data>
+</odoo>
