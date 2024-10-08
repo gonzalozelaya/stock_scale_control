@@ -1,0 +1,8 @@
+.oe_centered_field {
+        text-align: center;  /* Centra el campo */
+    }
+.oe_weight_large input {
+    font-size: 8em;  /* Ajusta el tamaño del texto del input */
+    width: 100%;  /* Hace que el campo ocupe todo el ancho */
+    padding: 10px;
+}

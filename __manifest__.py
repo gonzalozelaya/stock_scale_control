@@ -21,12 +21,17 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base','stock'],
-
+    'assets': {
+    'web.assets_backend': [
+        'stock_scale_control/static/src/css/style.css',
+    ]
+    },
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/views.xml',
-        'views/weight_control_views.xml'
+        'views/weight_control_views.xml',
+        'views/transport_views.xml',
     ],
 
 }

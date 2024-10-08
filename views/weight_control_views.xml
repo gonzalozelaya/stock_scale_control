@@ -1,22 +1,106 @@
 <odoo>
     <data>
+
+        <!-- Vista de Búsqueda -->
+        <record id="view_weight_control_search" model="ir.ui.view">
+            <field name="name">stock.picking.weight_control.search</field>
+            <field name="model">stock.picking.weight_control</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Entrada" name="filter_state" domain="[('state', '!=', 'second')]"/>
+                    <filter string="Salida" name="filter_state" domain="[('state', '!=', 'first')]"/>
+                    
+                    <filter string="State" name="group_state" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Product" name="group_product" domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter string="Transport" name="group_transport" domain="[]" context="{'group_by': 'transport_id'}"/>
+                    
+                    <!-- Campos búsqueda -->
+                    <field name="state"/>
+                    <field name="product_id"/>
+                    <field name="transport_id"/>
+                </search>
+            </field>
+        </record>
+        
         <record id="view_weight_control_form" model="ir.ui.view">
             <field name="name">stock.picking.weight_control.form</field>
             <field name="model">stock.picking.weight_control</field>
             <field name="arch" type="xml">
                 <form string="Weight Control">
-                    <group>
-                        <field name="state"/>
-                        <field name="datetime"/>
-                        <field name="weight"/>
-                    </group>
+                    <header>
+                        <field name="state" widget="statusbar" readonly="False"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="datetime"/>
+                        </group>
+                        <div class="oe_centered_field">
+                                <field name="weight" nolabel="1" class="oe_weight_large"/>
+                            </div>
+                    </sheet>
                 </form>
             </field>
         </record>
+        
         <record id="action_weight_control" model="ir.actions.act_window">
             <field name="name">Weight Control</field>
             <field name="res_model">stock.picking.weight_control</field>
             <field name="view_mode">form</field>
         </record>
+
+          <!-- Vista de Lista -->
+        <record id="view_weight_control_tree" model="ir.ui.view">
+            <field name="name">stock.picking.weight_control.tree</field>
+            <field name="model">stock.picking.weight_control</field>
+            <field name="arch" type="xml">
+                <tree string="Weight Control" default_order="datetime desc">
+                    <field name="state"/>
+                    <field name="document"/>
+                    <field name="product_id"/>
+                    <field name="transport_id"/>
+                    <field name="datetime"/>
+                    <field name="weight"/>
+                </tree>
+                
+            </field>
+        </record>
+
+        <!-- Vista de Formulario -->
+        <record id="view_weight_control_form_menu" model="ir.ui.view">
+            <field name="name">stock.picking.weight_control.form.menu</field>
+            <field name="model">stock.picking.weight_control</field>
+            <field name="arch" type="xml">
+                <form string="Weight Control">
+                    <sheet>
+                        <group>
+                            <field name="state"/>
+                            <field name="datetime"/>
+                            <field name="weight"/>
+                            <field name="product_id"/>
+                            <field name="transport_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción de ventana -->
+        <record id="action_weight_control_menu" model="ir.actions.act_window">
+            <field name="name">Weight Control</field>
+            <field name="res_model">stock.picking.weight_control</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_weight_control_tree"/>
+            <field name="view_ids" eval="[(5, 0, 0), 
+                                   (0, 0, {'view_mode': 'tree', 'view_id': ref('view_weight_control_tree')}), 
+                                   (0, 0, {'view_mode': 'form', 'view_id': ref('view_weight_control_form_menu')})]"/>
+            <field name="search_view_id" ref="view_weight_control_search"/>
+        </record>
+
+        <!-- Elemento de Menú -->
+        <menuitem id="menu_weight_control_root"
+                  name="Weight Control"
+                  parent="stock.menu_stock_root"
+                  action="action_weight_control_menu"
+                  sequence="10"/>
     </data>
 </odoo>
