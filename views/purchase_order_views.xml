@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+      <record id="view_purchase_order_form_inherit_transport" model="ir.ui.view">
+          <field name="name">purchase.order.form.inherit.transport</field>
+          <field name="model">purchase.order</field>
+          <field name="inherit_id" ref="purchase.purchase_order_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//notebook" position="inside">
+                  <page string="Transporte">
+                      <group>
+                          <group>
+                              <field name="transport_id" />
+                              <field name="driver_id" />
+                              <field name="dni" />
+                          </group>
+                          <group>
+                              <field name="chasis" />
+                              <field name="acoplado" />
+                          </group>
+                      </group>
+                  </page>
+              </xpath>
+          </field>
+      </record>
+        
+        
+    </data>
+  </odoo>

@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "aaaaaa",
+    'name': "stock_scale_control",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Allows to weight on stock.picking""",
 
     'description': """
-        Long description of module's purpose
+        Allows to weight on stock.picking
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "OutsourceArg",
+    'website': "https://www.outsourcearg.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '0.1',
+    'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','stock'],
+    'depends': ['delivery_iot','stock','account','purchase'],
     'assets': {
     'web.assets_backend': [
         'stock_scale_control/static/src/css/style.css',
@@ -29,9 +28,9 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/views.xml',
+        'views/purchase_order_views.xml',
         'views/weight_control_views.xml',
-        'views/transport_views.xml',
+        'views/stock_picking_views.xml',
     ],
 
 }

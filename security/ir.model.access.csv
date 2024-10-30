@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_weight_control_user,access_weight_control_user,model_stock_picking_weight_control,,1,1,1,1
-access_stock_picking_transport_user,access_stock_picking_transport_user,model_stock_picking_transport,base.group_user,1,1,1,1
-access_stock_picking_transport_manager,access_stock_picking_transport_manager,model_stock_picking_transport,base.group_system,1,1,1,1
+access_transport_user,access_transport_user,model_transport_transport,base.group_user,1,1,1,1
+access_driver_user,access_driver_user,model_transport_driver,base.group_user,1,1,1,1
+access_patent_user,access_patent_user,model_transport_patent,base.group_user,1,1,1,1

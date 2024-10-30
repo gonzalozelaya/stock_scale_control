@@ -12,12 +12,10 @@
                     
                     <filter string="State" name="group_state" domain="[]" context="{'group_by': 'state'}"/>
                     <filter string="Product" name="group_product" domain="[]" context="{'group_by': 'product_id'}"/>
-                    <filter string="Transport" name="group_transport" domain="[]" context="{'group_by': 'transport_id'}"/>
                     
                     <!-- Campos búsqueda -->
                     <field name="state"/>
                     <field name="product_id"/>
-                    <field name="transport_id"/>
                 </search>
             </field>
         </record>
@@ -34,6 +32,15 @@
                         <group>
                             <field name="datetime"/>
                         </group>
+                        <group>
+                            <field name="iot_device_id" invisible="1"/>
+                            <field name="iot_ip" invisible="1"/>
+                            <field name="iot_device_identifier" invisible="1"/>
+                            <field name="manual_measurement" invisible="1"/>
+                            <field name="iot_device_id" widget="field_many2one_iot_scale"
+                                options="{'value_field': 'weight', 'identifier': 'iot_device_identifier', 'ip_field': 'iot_ip', 'manual_measurement_field': 'manual_measurement'}"
+                                domain="[]" invisible="0"/>
+                        </group>
                         <div class="oe_centered_field">
                                 <field name="weight" nolabel="1" class="oe_weight_large"/>
                             </div>
@@ -43,7 +50,7 @@
         </record>
         
         <record id="action_weight_control" model="ir.actions.act_window">
-            <field name="name">Weight Control</field>
+            <field name="name">Pesajes</field>
             <field name="res_model">stock.picking.weight_control</field>
             <field name="view_mode">form</field>
         </record>
@@ -57,7 +64,6 @@
                     <field name="state"/>
                     <field name="document"/>
                     <field name="product_id"/>
-                    <field name="transport_id"/>
                     <field name="datetime"/>
                     <field name="weight"/>
                 </tree>
@@ -77,7 +83,6 @@
                             <field name="datetime"/>
                             <field name="weight"/>
                             <field name="product_id"/>
-                            <field name="transport_id"/>
                         </group>
                     </sheet>
                 </form>
@@ -86,7 +91,7 @@
 
         <!-- Acción de ventana -->
         <record id="action_weight_control_menu" model="ir.actions.act_window">
-            <field name="name">Weight Control</field>
+            <field name="name">Pesajes</field>
             <field name="res_model">stock.picking.weight_control</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_weight_control_tree"/>
@@ -98,7 +103,7 @@
 
         <!-- Elemento de Menú -->
         <menuitem id="menu_weight_control_root"
-                  name="Weight Control"
+                  name="Pesajes"
                   parent="stock.menu_stock_root"
                   action="action_weight_control_menu"
                   sequence="10"/>
