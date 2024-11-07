@@ -81,6 +81,10 @@ class AllowWeightOnStock(models.Model):
             'default_stock_move_id':self.id,
             'default_product_id': self.product_id.id,
             'default_iot_device_id': self.picking_id.iot_device_id.id,
+            'default_driver_id':self.picking_id.driver_id.id,
+            'default_transport_id': self.picking_id.transport_ids.id,
+            'default_chasis': self.picking_id.chasis.id,
+            'default_acoplado':self.picking_id.acoplado.id,
         }
         return {
             'type': 'ir.actions.act_window',

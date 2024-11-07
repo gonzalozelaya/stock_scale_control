@@ -16,7 +16,8 @@ class WeightControl(models.Model):
                              selection = [("first", "Entrada"),("second","Salida"),("finished","Finished")],
                              required = True)
     datetime = fields.Datetime('Fecha y Hora')
-    weight = fields.Float('Weight',store=True, readonly=False)
+    weight = fields.Float('Peso',store=True)
+    manual_weight = fields.Boolean('Ajuste manual',default=False)
     stock_move_id = fields.Many2one(
         comodel_name='stock.move',  # Apunta al modelo stock.move
         string='Movimiento',
@@ -27,6 +28,27 @@ class WeightControl(models.Model):
     )
     document = fields.Char(related='stock_move_id.picking_id.name',string='Documento')
 
+    transport_id = fields.Many2one(
+            'transport.transport',
+            string='Transporte', 
+            readonly=True
+        )
+    driver_id = fields.Many2one(
+        'transport.driver', 
+        string='Conductor', 
+        readonly=True,
+    )
+    chasis = fields.Many2one(
+        'transport.patent',
+        string='Chasis', 
+        readonly=True,
+    )
+    acoplado = fields.Many2one(
+        'transport.patent', 
+        string='Acoplado', 
+        readonly=True,
+    )
+    
     @api.depends('state','product_id')
     def _compute_display_name(self):
         for weight in self:

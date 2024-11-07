@@ -1,0 +1,27 @@
+<odoo>
+    <template id="custom_header_small">
+           <div>
+            <div class="row">
+                <div name="left-upper-side" class="col-6" t-if="not pre_printed_report">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 65px;" alt="Logo"/>
+                </div>
+                <div name="right-upper-side" class="col-6 text-end" style="padding-left: 0px;margin-top:20px;" t-if="not pre_printed_report">
+                    <!-- (6) Titulo de Documento -->
+                    <h4 t-att-style="'color: %s;' % o.company_id.primary_color"><strong>
+                        <span>RECEPCIÓN</span>
+                    </strong></h4>
+                    <t t-out="report_number" style="margin-top:-5px"/>
+                </div>
+            </div>
+            <div class="row">
+                <h5>ECO NORTE SRL</h5>
+            </div>
+            <div>
+                <p style="line-height:10px">Los partidarios 1223</p>
+            </div>
+            <div>
+                <p style="line-height:10px">Salta 4400,Argentina</p>
+            </div>
+        </div>
+    </template>
+</odoo>

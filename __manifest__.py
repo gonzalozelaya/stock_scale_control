@@ -31,6 +31,10 @@
         'views/purchase_order_views.xml',
         'views/weight_control_views.xml',
         'views/stock_picking_views.xml',
+        'views/sale_order_views.xml',
+        'views/account_move.xml',
+        'reports/report_recepcion.xml',
+        'reports/report_small_header.xml'
     ],
 
 }
