@@ -8,6 +8,7 @@ class AllowWeightOnStock(models.Model):
 
     iot_device_id = fields.Many2one('iot.device', "Scale",
                                     domain=[('type', '=', 'scale')],
+                                    compute='_compute_iot_device'
                                     )
 
     available_iot_device_ids = fields.Many2many('iot.device')
