@@ -6,9 +6,8 @@ from odoo.exceptions import UserError
 class AllowWeightOnStock(models.Model):
     _inherit = 'stock.picking'
 
-    iot_device_id = fields.Many2one('iot.device', "Scale",
+    iot_device_id = fields.Many2one('iot.device', "Báscula",
                                     domain=[('type', '=', 'scale')],
-                                    compute='_compute_iot_device'
                                     )
 
     available_iot_device_ids = fields.Many2many('iot.device')
@@ -53,19 +52,21 @@ class AllowWeightOnStock(models.Model):
                     sale_order['date_done'] = self.date_done
         return res
                    
-    @api.depends('picking_type_id')
-    def _compute_iot_device(self):
-        for picking in self:
-            if picking.picking_type_id:
-                iot_scale_ids = picking.picking_type_id.iot_scale_ids
-                if iot_scale_ids:
-                    if iot_scale_ids[0]:
-                        # Seleccionar la primera báscula si hay más de una
-                        picking['iot_device_id'] = iot_scale_ids[0].id
-                    else:
-                        picking['iot_device_id'] = False
-                else:
-                    picking['iot_device_id'] = False
+    @api.model
+    def create(self, vals):
+        # Ejecuta la lógica de asignación de iot_device_id solo durante la creación del registro
+        picking_type_id = vals.get('picking_type_id')
+        if picking_type_id:
+            picking_type = self.env['stock.picking.type'].browse(picking_type_id)
+            iot_scale_ids = picking_type.iot_scale_ids
+            if iot_scale_ids:
+                vals['iot_device_id'] = iot_scale_ids[0].id  # Seleccionar la primera báscula si hay más de una
+            else:
+                vals['iot_device_id'] = False
+        else:
+            vals['iot_device_id'] = False
+        
+        return super(AllowWeightOnStock, self).create(vals)
                 
     @api.depends('picking_type_id')            
     def _compute_available_iot_device_ids(self):

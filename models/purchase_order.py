@@ -7,25 +7,25 @@ class PurchaseOrderTransport(models.Model):
     transport_id = fields.Many2one(
             'transport.transport', 
             string='Transporte', 
-            required=False
+            required=True
         )
     
     driver_id = fields.Many2one(
         'transport.driver', 
         string='Conductor', 
-        required=False,
+        required=True,
     )
 
     chasis = fields.Many2one(
         'transport.patent', 
         string='Chasis', 
-        required=False,
+        required=True,
     )
 
     acoplado = fields.Many2one(
         'transport.patent', 
         string='Acoplado', 
-        required=False,
+        required=True,
     )
     dni = fields.Char('Identificación')
 

@@ -77,7 +77,6 @@ class AllowWeightOnStock(models.Model):
         default_values = {
             'default_state': default_state,  # Estado inicial
             'default_datetime': fields.Datetime.now(),  # Tiempo actual
-            'default_weight': 0.0,  # Valor inicial del peso
             'default_stock_move_id':self.id,
             'default_product_id': self.product_id.id,
             'default_iot_device_id': self.picking_id.iot_device_id.id,

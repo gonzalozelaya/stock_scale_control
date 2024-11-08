@@ -23,6 +23,7 @@
     'assets': {
     'web.assets_backend': [
         'stock_scale_control/static/src/css/style.css',
+        'stock_scale_control/static/src/xml/one2many_widget.xml',
     ]
     },
     # always loaded

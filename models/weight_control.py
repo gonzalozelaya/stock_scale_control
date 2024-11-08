@@ -8,7 +8,7 @@ class WeightControl(models.Model):
     iot_device_identifier = fields.Char(related='iot_device_id.identifier')
     iot_ip = fields.Char(related='iot_device_id.iot_ip')
     #manual_measurement = fields.Boolean(related='iot_device_id.manual_measurement')
-    manual_measurement = fields.Boolean('Manual',default=False)
+    manual_measurement = fields.Boolean('Manual', default = True)
 
     display_name = fields.Char(string = "Display Name", compute = '_compute_display_name')
     
@@ -17,7 +17,7 @@ class WeightControl(models.Model):
                              required = True)
     datetime = fields.Datetime('Fecha y Hora')
     weight = fields.Float('Peso',store=True)
-    manual_weight = fields.Boolean('Ajuste manual',default=False)
+    manual_weight = fields.Boolean('Ajuste manual',default=True)
     stock_move_id = fields.Many2one(
         comodel_name='stock.move',  # Apunta al modelo stock.move
         string='Movimiento',
@@ -59,5 +59,8 @@ class WeightControl(models.Model):
                     weight.display_name = f'Salida {weight.product_id.name}'
             else:
                 weight.display_name = False
-
-
+    @api.onchange('weight')
+    def _onchange_weight(self):
+        for weight in self:
+            weight['weight'] = weight.weight
+    

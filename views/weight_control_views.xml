@@ -40,12 +40,11 @@
                             <field name="iot_device_identifier" invisible="1"/>
                             <field name="manual_measurement" invisible="1"/>
                             <field name="iot_device_id" widget="field_many2one_iot_scale"
-                                options="{'value_field': 'weight', 'identifier': 'iot_device_identifier', 'ip_field': 'iot_ip', 'manual_measurement_field': 'manual_measurement'}"
+                                options="{'value_field': 'weight', 'identifier': 'iot_device_identifier', 'ip_field': 'iot_ip', 'manual_measurement_field': 'manual_measurement',}"
                                 domain="[]" invisible="0"/>
-                            <field name="manual_weight"/>
                         </group>
                         <div class="oe_centered_field">
-                            <field name="weight" nolabel="1" readonly="not manual_weight"  style="font-size: 8em !important;"/>
+                            <field name="weight" nolabel="1"  style="font-size: 8em !important;padding:10px !important;"/>
                         </div>
                     </sheet>
                 </form>
