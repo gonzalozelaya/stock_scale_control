@@ -30,6 +30,12 @@ class SaleOrder(models.Model):
 
     date_done = fields.Datetime('Fecha validada')
     
+    @api.onchange('driver_id')
+    def _onchange_driver_id(self):
+        for order in self:
+            if order.driver_id:
+                order.dni = order.driver_id.dni 
+    
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         for picking in self.picking_ids:
@@ -39,5 +45,5 @@ class SaleOrder(models.Model):
             picking.transport_ids = self.transport_id.id
             #Asignar DNI si el conductor no lo tiene
             if not picking.driver_id.dni:
-                picking.driver_id.dni = picking.dni
+                picking.driver_id.dni = self.dni
         return res
