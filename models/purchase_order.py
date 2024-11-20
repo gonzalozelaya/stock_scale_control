@@ -69,3 +69,31 @@ class PurchaseOrderTransport(models.Model):
             if not picking.driver_id.dni:
                 picking.driver_id.dni = self.dni
         return res
+        
+    @api.depends_context('lang')
+    @api.depends('order_line.taxes_id', 'order_line.price_subtotal', 'amount_total', 'amount_untaxed')
+    def _compute_tax_totals(self):
+        for order in self:
+            # Filtrar las líneas que no sean de tipo display
+            order_lines = order.order_line.filtered(lambda x: not x.display_type)
+
+            # Preparar las líneas para el cálculo de impuestos con base en las cantidades recibidas
+            tax_base_lines = []
+            for line in order_lines:
+                # Convertir la línea en un diccionario base de impuestos
+                base_line_dict = line._convert_to_tax_base_line_dict()
+
+                # Utilizar la cantidad recibida si está disponible
+                quantity = line.qty_received if line.qty_received > 0 else line.product_qty
+
+                # Actualizar la cantidad en el diccionario base
+                base_line_dict['quantity'] = quantity
+
+
+                tax_base_lines.append(base_line_dict)
+
+            # Calcular los impuestos utilizando las líneas modificadas
+            order.tax_totals = self.env['account.tax']._prepare_tax_totals(
+                tax_base_lines,
+                order.currency_id or order.company_id.currency_id,
+            )

@@ -35,7 +35,8 @@
         'views/sale_order_views.xml',
         'views/account_move.xml',
         'reports/report_recepcion.xml',
-        'reports/report_small_header.xml'
+        'reports/report_small_header.xml',
+        'views/transport_driver.xml'
     ],
 
 }

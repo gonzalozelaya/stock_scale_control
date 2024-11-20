@@ -47,3 +47,4 @@ class SaleOrder(models.Model):
             if not picking.driver_id.dni:
                 picking.driver_id.dni = self.dni
         return res
+ 

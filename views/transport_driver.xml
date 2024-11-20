@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vista Tree para transport.driver -->
+    <record id="view_driver_tree" model="ir.ui.view">
+        <field name="name">transport.driver.tree</field>
+        <field name="model">transport.driver</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="dni"/>
+                <field name="transport_id"/>
+                <field name="patent_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista Form para transport.driver -->
+    <record id="view_driver_form" model="ir.ui.view">
+        <field name="name">transport.driver.form</field>
+        <field name="model">transport.driver</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="dni"/>
+                    </group>
+                    <group>
+                        <field name="transport_id"/>
+                        <field name="patent_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Kanban para transport.driver -->
+    <record id="view_driver_kanban" model="ir.ui.view">
+        <field name="name">transport.driver.kanban</field>
+        <field name="model">transport.driver</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="dni"/>
+                <field name="transport_id"/>
+                <field name="patent_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_details">
+                                <div class="oe_kanban_name">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="oe_kanban_dni">
+                                    <span><field name="dni"/></span>
+                                </div>
+                                <div class="oe_kanban_transport">
+                                    <span><field name="transport_id"/></span>
+                                </div>
+                                <div class="oe_kanban_patents" t-if="record.patent_ids">
+                                    <span>Patentes:</span>
+                                    <ul>
+                                        <li t-foreach="record.patent_ids" t-as="patent">
+                                            <span t-esc="patent.name"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Acción para abrir la vista tree -->
+    <record id="action_driver" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">transport.driver</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_create">
+                Click en "Crear" para añadir un nuevo conductor.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menú del módulo para transport.driver -->
+        <menuitem id="menu_transport_driver_main" 
+              name="Conductores" 
+              sequence="10" 
+              action="action_driver"
+              parent="contacts.menu_contacts"/>
+</odoo>

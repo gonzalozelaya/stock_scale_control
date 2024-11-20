@@ -13,7 +13,7 @@
             <t t-set="header_address" t-value="o.journal_id.l10n_ar_afip_pos_partner_id"/>
             <div>
                 <div>
-                    <span>Entrada: </span><span t-field="o.date_done">-</span>
+                    <span>Entrada: </span><span t-field="o.date_start">-</span>
                 </div>
                 <div>
                     <span>Salida: </span><span t-field="o.date_done">-</span>
@@ -54,7 +54,7 @@
                             <span style="color:black !important;font-weight:strong !important;">Disc.%</span>
                         </th>
                         <th name="th_subtotal" class="text-end">
-                            <span style="color:black !important;font-weight:strong !important;">Monto</span>
+                            <span style="color:black !important;font-weight:strong !important;">Monto($)</span>
                         </th>
                     </tr>
                 </thead>
@@ -71,17 +71,18 @@
                             <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
                                 <td name="account_invoice_line_name"><span t-if="line.product_id.name" t-field="line.product_id.name" t-options="{'widget': 'text'}">Bacon Burger</span></td>
                                 <td name="td_quantity" class="text-end">
-                                    <span t-field="line.quantity">3.00</span>
-                                    <span t-field="line.product_uom_id" groups="uom.group_uom">units</span>
+                                    <span t-esc="('%.1f' % line.quantity).replace('.', ',')"/>
+                                    <span t-field="line.product_uom_id" groups="uom.group_uom" style="font-size:10px !important;">units</span>
                                 </td>
                                 <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                    <span class="text-nowrap" t-field="line.price_unit">9.00</span>
+                                    <span t-esc="('%.0f' % line.price_unit).replace('.', ',')"/>
                                 </td>
                                 <td name="td_discount" t-if="display_discount" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                     <span class="text-nowrap" t-field="line.discount">0</span>
                                 </td>
                                 <td name="td_subtotal" class="text-end o_price_total">
-                                    <span class="text-nowrap" t-field="line.price_subtotal">27.00</span>
+                                    <span t-esc="('%.0f' % line.price_subtotal).replace('.', ',')"/>
+                                    <!--<span class="text-nowrap" t-field="line.price_subtotal">27.00</span>-->
                                 </td>
                             </t>
                             <t t-elif="line.display_type == 'line_section'">
@@ -116,8 +117,14 @@
     
                             <!--Tax totals-->
                             <t t-set="tax_totals" t-value="o.tax_totals"/>
-                            <t t-call="account.document_tax_totals"/>
-    
+                            <tr class="border-black o_total">
+                                <td><strong>Total</strong></td>
+                                <td class="text-end">
+                                    <span>$</span>
+                                    <span  t-esc="('%.0f' % float(tax_totals['formatted_amount_total'].replace('$', '').replace('\xa0', '').replace('.', '').replace(',', '.'))).replace('.', ',')" >31.05</span>
+                                </td>
+                            </tr>
+                    
                             <!--Payments-->
                             <t t-if="print_with_payments">
                                 <t t-if="o.payment_state != 'invoicing_legacy'">

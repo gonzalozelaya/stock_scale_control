@@ -8,3 +8,4 @@ from . import transport_patent
 from . import weight_control
 from . import transport_transport
 from . import sale_order
+from . import purchase_order_line
