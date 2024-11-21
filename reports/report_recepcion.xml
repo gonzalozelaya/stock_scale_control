@@ -34,7 +34,7 @@
                 <span>Transporte: </span><t t-out="o.transport_id.name"/>
             </div>
             <div>
-                <span>Chasis: </span><t t-out="o.chasis.name"/><span> - Acoplado: d</span><t t-out="o.acoplado.name"/>
+                <span>Chasis: </span><t t-out="o.chasis.name"/><span> - Acoplado: </span><t t-out="o.acoplado.name"/>
             </div>
             <div>
                 <span>Chofer: </span><t t-out="o.driver_id.name"/>
