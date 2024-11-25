@@ -1,7 +1,13 @@
 from odoo import models, fields, api
+from odoo.exceptions import AccessError,UserError
 
 class WeightControl(models.Model):
     _name = 'stock.picking.weight_control'
+
+
+    show_password = fields.Boolean('Habilitar peso manual', default=False, store=False)
+    password = fields.Char('Contraseña', store=True)
+    show_success_message = fields.Boolean('Mostrar Mensaje de Éxito', default=False, store=False)
 
     #available_scale_ids = fields.Many2many('iot.device', related='picking_type_id.iot_scale_ids')
     iot_device_id = fields.Many2one('iot.device', "Báscula")
@@ -17,7 +23,8 @@ class WeightControl(models.Model):
                              required = True)
     datetime = fields.Datetime('Fecha y Hora')
     weight = fields.Float('Peso',store=True)
-    manual_weight = fields.Boolean('Ajuste manual',default=True)
+    weight_to_show = fields.Float('Mostrar peso', compute='_compute_weight_to_show', store=True, readonly=True)
+    manual_weight = fields.Boolean('Ajuste manual',default=False )
     stock_move_id = fields.Many2one(
         comodel_name='stock.move',  # Apunta al modelo stock.move
         string='Movimiento',
@@ -59,8 +66,29 @@ class WeightControl(models.Model):
                     weight.display_name = f'Salida {weight.product_id.name}'
             else:
                 weight.display_name = False
-    @api.onchange('weight')
-    def _onchange_weight(self):
-        for weight in self:
-            weight['weight'] = weight.weight
-    
+                
+    @api.depends('weight')
+    def _compute_weight_to_show(self):
+        for record in self:
+            record.weight_to_show = record.weight
+
+    def show_password_field(self):
+        """Este método se llama cuando el usuario presiona el botón para mostrar el campo de contraseña."""
+        for record in self:
+            record.show_password = True
+
+    @api.onchange('password')
+    def _onchange_password(self):
+        """Este método se ejecuta cuando el usuario cambia el valor de la contraseña."""
+        correct_password = "contraseña"  # Define tu contraseña en un lugar seguro
+
+        for record in self:
+            if record.password and record.password == correct_password:
+                record.manual_weight = True
+                record.show_password = False  # Ocultar el campo de contraseña una vez validado
+                record.password = False  # Limpiar el campo de contraseña después de validarla
+                record.show_success_message = True  # Mostrar mensaje de éxito
+            elif record.password:
+                # Si la contraseña es incorrecta, muestra un error y restablece la contraseña
+                record.password = False
+                raise AccessError("Contraseña incorrecta. No tienes permisos para cambiar el ajuste manual.")

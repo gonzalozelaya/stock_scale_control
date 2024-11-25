@@ -29,6 +29,7 @@
                 <form string="Weight Control">
                     <header>
                         <field name="state" widget="statusbar" readonly="False"/>
+
                     </header>
                     <sheet>
                         <group>
@@ -39,12 +40,28 @@
                             <field name="iot_ip" invisible="1"/>
                             <field name="iot_device_identifier" invisible="1"/>
                             <field name="manual_measurement" invisible="1"/>
+                            <field name="manual_weight" invisible="1"/>
+                            <field name="show_success_message" invisible="1"/>
+                            <field name="weight" invisible="1"/>
                             <field name="iot_device_id" widget="field_many2one_iot_scale"
                                 options="{'value_field': 'weight', 'identifier': 'iot_device_identifier', 'ip_field': 'iot_ip', 'manual_measurement_field': 'manual_measurement',}"
                                 domain="[]" invisible="0"/>
                         </group>
                         <div class="oe_centered_field">
-                            <field name="weight" nolabel="1"  style="font-size: 8em !important;padding:10px !important;"/>
+                            <field name="weight_to_show" nolabel="1"  style="font-size: 8em !important;padding:10px !important;" invisible="manual_weight"/>
+                        </div>
+                        <div class="oe_centered_field">
+                            <field name="weight" nolabel="1"  style="font-size: 8em !important;padding:10px !important;" invisible="not manual_weight"/>
+                        </div>
+                        <group>
+                        <field name="show_password" invisible="manual_weight"/>
+                        <field name="password" password="True" 
+                                   invisible="not show_password"/>
+                        </group>
+                        <div role="alert" class="alert alert-success" 
+                             style="height:40px; width:100%; margin-bottom:10px;" 
+                             invisible="not show_success_message">
+                            <p>Ajuste manual habilitado con éxito.</p>
                         </div>
                     </sheet>
                 </form>

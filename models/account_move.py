@@ -92,7 +92,7 @@ class AccountMove(models.Model):
         if not journal:
             if self.move_type == 'in_invoice':
                 journal = self.env['account.journal'].browse(32)
-            elif self.move_type == 'out_invoice':
+            elif self.move_type == 'out_invoice' or self.move_type == 'entry':
                 journal = self.env['account.journal'].browse(21)
         if not journal:
             journal = self.env['account.journal'].search(domain, limit=1)
