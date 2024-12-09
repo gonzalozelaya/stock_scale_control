@@ -4,7 +4,12 @@ from odoo.exceptions import AccessError,UserError
 class WeightControl(models.Model):
     _name = 'stock.picking.weight_control'
 
-
+    company_id = fields.Many2one(
+    'res.company', 
+    string='Empresa', 
+    required=True,
+    default=lambda self: self.env.company
+)
     show_password = fields.Boolean('Habilitar peso manual', default=False, store=False)
     password = fields.Char('Contraseña', store=True)
     show_success_message = fields.Boolean('Mostrar Mensaje de Éxito', default=False, store=False)
