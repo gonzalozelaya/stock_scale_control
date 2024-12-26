@@ -9,3 +9,5 @@ from . import weight_control
 from . import transport_transport
 from . import sale_order
 from . import purchase_order_line
+from . import stock_move_transfer
+from . import direct_transfer

@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <record id="view_stock_picking_transfer_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.transfer.form.inherit</field>
+            <field name="model">stock.picking.transfer</field>
+            <field name="inherit_id" ref="multi_company_direct_transfer.view_stock_picking_transfer_form"/> <!-- Reemplaza `module_name` con el nombre del módulo original -->
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='location_dest_id_new']" position="after">
+                    <field name="iot_device_id"/>
+                </xpath>
+                <xpath expr="//notebook/page[field[@name='move_ids']]" position="replace">
+                    <!-- Nueva implementación del contenido -->
+                    <page string="Líneas de Movimiento">
+                        <field name="move_ids" mode="tree,kanban"
+                            widget="stock_move_one2many"
+                            readonly="state == 'done'"
+                            context="{'default_company_id': company_id, 'default_date': scheduled_date, 'default_picking_transfer_id': id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}"
+                            add-label="Add a Product">
+                            <tree decoration-muted="state == 'cancel' or (state == 'done')" string="Stock Moves" editable="1">
+                                <field name="company_id" column_invisible="True"/>
+                                <field name="name" column_invisible="True"/>
+                                <field name="state" readonly="0" column_invisible="True"/>
+                                <field name="picking_transfer_id" column_invisible="True"/>
+                                <field name="move_ids" column_invisible="True"/>
+                                <field name="location_id" column_invisible="True"/>
+                                <field name="location_dest_id" column_invisible="True"/>
+                                <field name="product_id" optional="show"/>
+                                <field name="date" optional="hide"/>
+                                <field name="quantity" string="Quantity" />
+                                <field name="product_uom" readonly="state != 'draft'" options="{'no_open': True, 'no_create': True}" string="Unit"/>
+                                <field name="product_uom" groups="!uom.group_uom" column_invisible="True"/>
+                                <field name="first_weight" column_invisible="parent.state not in ['assigned']" readonly="1"/>
+                                <field name="second_weight" column_invisible="parent.state not in ['assigned']" readonly="1"/>
+                                <field name="discount" column_invisible="parent.state not in ['assigned']"/>
+                                <button name="open_weight_control_popup" type="object" string="Pesar" invisible="(first_weight and second_weight) or parent.state not in ['confirmed', 'assigned']"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                 <xpath expr="//notebook" position="inside">
+                     <page string="Transporte">
+                         <group>
+                              <group>
+                                  <field name="transport_id" />
+                                  <field name="driver_id" />
+                                  <field name="dni" />
+                              </group>
+                              <group>
+                                  <field name="chasis" />
+                                  <field name="acoplado" />
+                              </group>
+                          </group>
+                     </page>
+                 </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

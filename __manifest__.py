@@ -19,7 +19,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['delivery_iot','stock','account','purchase'],
+    'depends': ['delivery_iot','stock','account','purchase','multi_company_direct_transfer'],
     'assets': {
     'web.assets_backend': [
         'stock_scale_control/static/src/css/style.css',
@@ -36,7 +36,8 @@
         'views/account_move.xml',
         'reports/report_recepcion.xml',
         'reports/report_small_header.xml',
-        'views/transport_driver.xml'
+        'views/transport_driver.xml',
+        'views/direct_transfer_view.xml'
     ],
 
 }
