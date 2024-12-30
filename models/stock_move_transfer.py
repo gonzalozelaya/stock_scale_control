@@ -11,6 +11,14 @@ class DirectTransfer(models.Model):
 
     discount = fields.Float('Descuento')
 
+    quantity = fields.Float(
+    'Quantity',
+    compute ='_compute_quantity',
+    digits='Product Unit of Measure',store=True)
+    availability = fields.Float(
+        'Forecasted Quantity',
+        readonly=True, help='Quantity in stock that can still be reserved for this move')
+    
     weight_control_ids = fields.One2many(
         comodel_name='stock.picking.weight_control',  # Apunta al modelo WeightControl
         inverse_name='stock_direct_move_id',  # Nombre del campo Many2one en WeightControl

@@ -9,33 +9,38 @@ class AllowWeightOnStock(models.Model):
     iot_device_id = fields.Many2one('iot.device', "Báscula",
                                     domain=[('type', '=', 'scale')],
                                     )
-
     available_iot_device_ids = fields.Many2many('iot.device')
     
     transport_ids = fields.Many2one(
             'transport.transport',
             string='Transporte', 
-            readonly=True
         )
     
     driver_id = fields.Many2one(
         'transport.driver', 
         string='Conductor', 
-        readonly=True,
     )
 
     chasis = fields.Many2one(
         'transport.patent',
         string='Chasis', 
-        readonly=True,
     )
 
     acoplado = fields.Many2one(
         'transport.patent', 
         string='Acoplado', 
-        readonly=True,
     )
+    
+    dni = fields.Char('Identificación')
 
+    date_done = fields.Datetime('Fecha validada')
+    
+    @api.onchange('driver_id')
+    def _onchange_driver_id(self):
+        for order in self:
+            if order.driver_id:
+                order.dni = order.driver_id.dni 
+    
     arrival_time = fields.Datetime('Hora de entrada')
     exit_time = fields.Datetime('Hora de salida')
 

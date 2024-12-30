@@ -34,6 +34,24 @@ class WeightControl(models.Model):
         comodel_name='stock.move',  # Apunta al modelo stock.move
         string='Movimiento',
     )
+    company_id_from_move = fields.Many2one(
+    comodel_name='res.company',
+    string='Empresa (desde Movimiento)',
+    related='stock_move_id.company_id',
+    readonly=True,
+    store=True  # Si quieres que se almacene en la base de datos
+)
+    stock_direct_move_id =fields.Many2one(
+        comodel_name='stock.move',  # Apunta al modelo stock.move
+        string='Movimiento',
+    )
+    company_from_direct_move = fields.Many2one(
+    comodel_name='res.company',
+    string='Empresa (desde Movimiento)',
+    related='stock_direct_move_id.company_id',
+    readonly=True,
+    store=True  # Si quieres que se almacene en la base de datos
+)
     product_id = fields.Many2one(
         comodel_name = 'product.product',
         string='Producto',

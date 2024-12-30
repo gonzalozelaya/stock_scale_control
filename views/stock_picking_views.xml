@@ -69,7 +69,7 @@
                       </field>
                 </page>
             </xpath>
-            <xpath expr="//group[@name='other_infos']" position="before">
+            <xpath expr="//group[@name='carrier_data']" position="before">
                     <group name="transport_info" string="Transporte">
                         <field name="driver_id"/>
                         <field name="chasis"/>
