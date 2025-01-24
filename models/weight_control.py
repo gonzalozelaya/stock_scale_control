@@ -42,7 +42,7 @@ class WeightControl(models.Model):
     store=True  # Si quieres que se almacene en la base de datos
 )
     stock_direct_move_id =fields.Many2one(
-        comodel_name='stock.move',  # Apunta al modelo stock.move
+        comodel_name='stock.move.direct_transfer',  # Apunta al modelo stock.move
         string='Movimiento',
     )
     company_from_direct_move = fields.Many2one(

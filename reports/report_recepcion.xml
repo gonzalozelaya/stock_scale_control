@@ -13,7 +13,7 @@
             <t t-set="header_address" t-value="o.journal_id.l10n_ar_afip_pos_partner_id"/>
             <div>
                 <div>
-                    <span>Entrada: </span><span t-field="o.date_start">-</span>
+                    <span>Entrada: </span><span t-field="o.date_done">-</span>
                 </div>
                 <div>
                     <span>Salida: </span><span t-field="o.date_done">-</span>
@@ -49,7 +49,7 @@
                     <tr>
                         <th name="th_description" class="text-start"><span style="color:black !important;font-weight:strong !important;">Prod.</span></th>
                         <th name="th_quantity"><span style="color:black !important;font-weight:strong !important;">Cant.</span></th>
-                        <th name="th_priceunit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span style="color:black !important;font-weight:strong !important;">$ x KG</span></th>
+                        <th name="th_priceunit" t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span style="color:black !important;font-weight:strong !important;">$</span></th>
                         <th name="th_discount" t-if="display_discount" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                             <span style="color:black !important;font-weight:strong !important;">Disc.%</span>
                         </th>
@@ -72,7 +72,7 @@
                                 <td name="account_invoice_line_name"><span t-if="line.product_id.name" t-field="line.product_id.name" t-options="{'widget': 'text'}">Bacon Burger</span></td>
                                 <td name="td_quantity" class="text-end">
                                     <span t-esc="('%.1f' % line.quantity).replace('.', ',')"/>
-                                    <span t-field="line.product_uom_id" groups="uom.group_uom" style="font-size:10px !important;">units</span>
+                                    <span t-field="line.product_uom_id" groups="uom.group_uom">units</span>
                                 </td>
                                 <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                     <span t-esc="('%.0f' % line.price_unit).replace('.', ',')"/>
@@ -81,6 +81,7 @@
                                     <span class="text-nowrap" t-field="line.discount">0</span>
                                 </td>
                                 <td name="td_subtotal" class="text-end o_price_total">
+                                    <!--<span>$</span>-->
                                     <span t-esc="('%.0f' % line.price_subtotal).replace('.', ',')"/>
                                     <!--<span class="text-nowrap" t-field="line.price_subtotal">27.00</span>-->
                                 </td>
@@ -121,10 +122,10 @@
                                 <td><strong>Total</strong></td>
                                 <td class="text-end">
                                     <span>$</span>
-                                    <span  t-esc="('%.0f' % float(tax_totals['formatted_amount_total'].replace('$', '').replace('\xa0', '').replace('.', '').replace(',', '.'))).replace('.', ',')" >31.05</span>
+                                    <span t-esc="('%.0f' % float(tax_totals['formatted_amount_total'].replace('$', '').replace('\xa0', '').replace('.', '').replace(',', '.'))).replace('.', ',')">31.05</span>
                                 </td>
                             </tr>
-                    
+    
                             <!--Payments-->
                             <t t-if="print_with_payments">
                                 <t t-if="o.payment_state != 'invoicing_legacy'">
