@@ -37,7 +37,9 @@
         'reports/report_recepcion.xml',
         'reports/report_small_header.xml',
         'views/transport_driver.xml',
-        'views/direct_transfer_view.xml'
+        'views/direct_transfer_view.xml',
+        'views/res_config_views.xml',
+        'data/security_groups.xml'
     ],
 
 }

@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <record id="group_scale_control_manager" model="res.groups">
+            <field name="name">Gestor de Pesajes</field>
+            <field name="category_id" ref="base.module_category_inventory"/>
+        </record>
+    </data>
+</odoo>

@@ -1,6 +1,8 @@
 from odoo import models, fields, api
 from odoo.exceptions import AccessError,UserError
+import logging
 
+_logger = logging.getLogger(__name__)
 class WeightControl(models.Model):
     _name = 'stock.picking.weight_control'
 
@@ -103,7 +105,9 @@ class WeightControl(models.Model):
     @api.onchange('password')
     def _onchange_password(self):
         """Este método se ejecuta cuando el usuario cambia el valor de la contraseña."""
-        correct_password = "contraseña"  # Define tu contraseña en un lugar seguro
+        password = self.env['ir.config_parameter'].sudo().get_param('stock_scale_control.password') or False
+
+        correct_password = password  # Define tu contraseña en un lugar seguro
 
         for record in self:
             if record.password and record.password == correct_password:
